@@ -5,7 +5,7 @@
 
 **Give every workspace its own color.** Colored Title Bar assigns a unique, visually appealing color to your VS Code title bar so you can instantly tell which project you're in — no more guessing across a dozen open windows.
 
-![Colored Title Bar Banner](images/colored-title-bar-banner-askew-short.png)
+![Colored Title Bar Banner](images/colored-title-bar-banner.png)
 
 ---
 

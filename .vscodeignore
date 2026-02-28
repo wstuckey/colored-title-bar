@@ -9,5 +9,8 @@ node_modules/**
 **/*.ts
 **/*.d.ts
 out/test/**
+.github/**
 images/colored-title-bar-banner-horizontal.png
+images/colored-title-bar-banner-askew.png
+images/colored-title-bar-banner-askew-short.png
 images/colored-title-bar-logo.png
