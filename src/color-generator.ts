@@ -215,9 +215,9 @@ export function deriveInactiveHsl(hsl: HSL, theme: ThemeKind): HSL {
   };
 }
 
-/** Derive the inactive foreground from the active foreground hex. */
+/** Derive an inactive foreground by appending 80 % alpha to the active foreground hex. */
 export function deriveInactiveForeground(activeForeground: string): string {
-  return activeForeground;
+  return activeForeground + "cc"; // 0xcc ≈ 80 % opacity
 }
 
 /** Derive a subtle border HSL from the active color. */
