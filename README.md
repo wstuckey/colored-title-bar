@@ -12,7 +12,7 @@
 - **Pick a color family** — choose from 14 named hue presets (Red, Orange, Teal, Blue, Purple, …).
 - **WCAG-aware foreground** — the extension picks white or black text based on contrast ratio, so icons and labels always stay readable.
 - **Inactive window styling** — the title bar gracefully fades when the window loses focus.
-- **Non-destructive** — only the five `titleBar.*` keys in `workbench.colorCustomizations` are touched; all other customisations are preserved.
+- **Non-destructive** — only the five `titleBar.*` keys in `workbench.colorCustomizations` are touched; all other customizations are preserved.
 
 ## Installation
 
