@@ -79,4 +79,3 @@ Contributions are welcome! Please open an issue or pull request.
 ## License
 
 [MIT](LICENSE)
-VS Code plugin for adding color to your title bar.
