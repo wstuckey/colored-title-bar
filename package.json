@@ -2,7 +2,7 @@
   "name": "colored-title-bar",
   "displayName": "Colored Title Bar",
   "description": "Apply a random, visually appealing color to the VS Code title bar — perfect for distinguishing workspaces at a glance.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "wstuckey",
   "license": "MIT",
   "repository": {
