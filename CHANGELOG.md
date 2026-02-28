@@ -5,6 +5,15 @@ All notable changes to **Colored Title Bar** will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.1.2] — 2026-02-27
+
+### Changed
+
+- New banner image for README and marketplace listing.
+- Excluded unused images and workflow files from VSIX package.
+- Tuned inactive title bar to retain 85% saturation for better visibility.
+- Widened color variation ranges with multi-channel deterministic seeding.
+
 ## [0.1.1] — 2026-02-27
 
 ### Changed
