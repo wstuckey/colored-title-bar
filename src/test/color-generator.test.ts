@@ -13,6 +13,7 @@ import {
   generateAppealingHsl,
   hslFromHue,
   hashStringToHue,
+  hashStringToFloat,
   deriveInactiveHsl,
   deriveInactiveForeground,
   deriveBorderHsl,
@@ -247,6 +248,22 @@ describe("hslFromHue", () => {
   it("normalizes negative hue", () => {
     assert.strictEqual(hslFromHue(-30, ThemeKind.Dark).h, 330);
   });
+
+  it("varies saturation across different hues", () => {
+    const sValues = [0, 60, 120, 180, 240, 300].map(
+      (h) => hslFromHue(h, ThemeKind.Dark).s,
+    );
+    const unique = new Set(sValues.map((v) => Math.round(v)));
+    assert.ok(unique.size > 1, `all saturation values were the same: ${[...unique]}`);
+  });
+
+  it("varies lightness across different hues", () => {
+    const lValues = [0, 60, 120, 180, 240, 300].map(
+      (h) => hslFromHue(h, ThemeKind.Dark).l,
+    );
+    const unique = new Set(lValues.map((v) => Math.round(v)));
+    assert.ok(unique.size > 1, `all lightness values were the same: ${[...unique]}`);
+  });
 });
 
 // ---------------------------------------------------------------------------
@@ -387,6 +404,33 @@ describe("hashStringToHue", () => {
 
 // ---------------------------------------------------------------------------
 
+describe("hashStringToFloat", () => {
+  it("returns a value in [0, 1)", () => {
+    const v = hashStringToFloat("/Users/dev/my-project");
+    assert.ok(v >= 0 && v < 1, `value was ${v}`);
+  });
+
+  it("is deterministic", () => {
+    const a = hashStringToFloat("test", 1);
+    const b = hashStringToFloat("test", 1);
+    assert.strictEqual(a, b);
+  });
+
+  it("produces different values for different seeds", () => {
+    const a = hashStringToFloat("test", 1);
+    const b = hashStringToFloat("test", 2);
+    assert.notStrictEqual(a, b);
+  });
+
+  it("produces different values for different inputs", () => {
+    const a = hashStringToFloat("project-a", 0);
+    const b = hashStringToFloat("project-b", 0);
+    assert.notStrictEqual(a, b);
+  });
+});
+
+// ---------------------------------------------------------------------------
+
 describe("generateTitleBarColorsFromSeed", () => {
   it("produces valid hex colors", () => {
     const colors = generateTitleBarColorsFromSeed("/Users/dev/project", ThemeKind.Dark);
@@ -403,5 +447,16 @@ describe("generateTitleBarColorsFromSeed", () => {
     const a = generateTitleBarColorsFromSeed("project-alpha", ThemeKind.Dark);
     const b = generateTitleBarColorsFromSeed("project-beta", ThemeKind.Dark);
     assert.notStrictEqual(a.activeBackground, b.activeBackground);
+  });
+
+  it("produces visually distinct colors across 20 workspace paths", () => {
+    const paths = Array.from({ length: 20 }, (_, i) => `/Users/dev/project-${i}`);
+    const backgrounds = new Set(
+      paths.map((p) => generateTitleBarColorsFromSeed(p, ThemeKind.Dark).activeBackground),
+    );
+    assert.ok(
+      backgrounds.size >= 15,
+      `only ${backgrounds.size} unique colors out of 20 seeds`,
+    );
   });
 });

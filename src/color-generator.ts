@@ -23,6 +23,18 @@ export function hashStringToHue(input: string): number {
   return hash % 360;
 }
 
+/**
+ * Deterministically hash a string to a value in [0, 1).
+ * Uses a secondary seed offset so it's independent of `hashStringToHue`.
+ */
+export function hashStringToFloat(input: string, seed = 0): number {
+  let hash = 5381 + seed;
+  for (let i = 0; i < input.length; i++) {
+    hash = ((hash << 5) + hash + input.charCodeAt(i)) >>> 0;
+  }
+  return (hash % 10000) / 10000;
+}
+
 // ---------------------------------------------------------------------------
 // Color-space conversions
 // ---------------------------------------------------------------------------
@@ -123,9 +135,9 @@ export function chooseForeground(backgroundHex: string): string {
  *
  * | Theme         | Saturation | Lightness |
  * |---------------|------------|-----------|
- * | Dark          | 30 – 75 %  | 15 – 35 % |
- * | Light         | 35 – 75 %  | 70 – 88 % |
- * | High Contrast | 50 – 80 %  | 12 – 25 % |
+ * | Dark          | 20 – 85 %  | 12 – 40 % |
+ * | Light         | 25 – 85 %  | 65 – 90 % |
+ * | High Contrast | 40 – 90 %  | 10 – 28 % |
  */
 export function generateAppealingHsl(theme: ThemeKind): HSL {
   const h = Math.random() * 360;
@@ -133,34 +145,56 @@ export function generateAppealingHsl(theme: ThemeKind): HSL {
 
   switch (theme) {
     case ThemeKind.Light:
-      s = 35 + Math.random() * 40;
-      l = 70 + Math.random() * 18;
+      s = 25 + Math.random() * 60;
+      l = 65 + Math.random() * 25;
       break;
     case ThemeKind.HighContrast:
-      s = 50 + Math.random() * 30;
-      l = 12 + Math.random() * 13;
+      s = 40 + Math.random() * 50;
+      l = 10 + Math.random() * 18;
       break;
     case ThemeKind.Dark:
     default:
-      s = 30 + Math.random() * 45;
-      l = 15 + Math.random() * 20;
+      s = 20 + Math.random() * 65;
+      l = 12 + Math.random() * 28;
       break;
   }
 
   return { h, s, l };
 }
 
-/** Create a pleasant HSL anchored to a specific hue for the given theme. */
+/**
+ * Create a pleasant HSL anchored to a specific hue for the given theme.
+ * Saturation and lightness are varied based on the hue to produce a
+ * wider palette — warm hues lean slightly more saturated, cool hues lean
+ * slightly lighter, etc.
+ */
 export function hslFromHue(hue: number, theme: ThemeKind): HSL {
   const h = ((hue % 360) + 360) % 360;
+
+  // Derive a 0-1 factor from the hue to vary S and L.
+  const hueNorm = h / 360;
+  const wave = Math.sin(hueNorm * Math.PI * 2); // -1..1 cycle over the hue wheel
+
   switch (theme) {
     case ThemeKind.Light:
-      return { h, s: 50, l: 78 };
+      return {
+        h,
+        s: 35 + wave * 20,           // 15 – 55
+        l: 72 + wave * 8,            // 64 – 80
+      };
     case ThemeKind.HighContrast:
-      return { h, s: 65, l: 18 };
+      return {
+        h,
+        s: 55 + wave * 15,           // 40 – 70
+        l: 16 + wave * 5,            // 11 – 21
+      };
     case ThemeKind.Dark:
     default:
-      return { h, s: 45, l: 25 };
+      return {
+        h,
+        s: 40 + wave * 20,           // 20 – 60
+        l: 22 + wave * 8,            // 14 – 30
+      };
   }
 }
 
@@ -229,8 +263,31 @@ export function generateTitleBarColorsFromHue(hue: number, theme: ThemeKind): Ti
  * (typically the workspace folder path). The same input always
  * produces the same color, so every workspace gets a unique,
  * stable color automatically.
+ *
+ * Unlike `hslFromHue`, this also varies saturation and lightness
+ * based on additional hash channels for maximum variety.
  */
 export function generateTitleBarColorsFromSeed(seed: string, theme: ThemeKind): TitleBarColors {
   const hue = hashStringToHue(seed);
-  return titleBarColorsFromHsl(hslFromHue(hue, theme), theme);
+  const sFloat = hashStringToFloat(seed, 1);  // 0-1
+  const lFloat = hashStringToFloat(seed, 2);  // 0-1
+
+  let s: number, l: number;
+  switch (theme) {
+    case ThemeKind.Light:
+      s = 25 + sFloat * 60;    // 25 – 85
+      l = 65 + lFloat * 25;    // 65 – 90
+      break;
+    case ThemeKind.HighContrast:
+      s = 40 + sFloat * 50;    // 40 – 90
+      l = 10 + lFloat * 18;    // 10 – 28
+      break;
+    case ThemeKind.Dark:
+    default:
+      s = 20 + sFloat * 65;    // 20 – 85
+      l = 12 + lFloat * 28;    // 12 – 40
+      break;
+  }
+
+  return titleBarColorsFromHsl({ h: hue, s, l }, theme);
 }
