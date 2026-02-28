@@ -1,5 +1,7 @@
 # Colored Title Bar
 
+[![CI](https://github.com/wstuckey/colored-title-bar/actions/workflows/ci.yml/badge.svg)](https://github.com/wstuckey/colored-title-bar/actions/workflows/ci.yml)
+
 > Apply a random, visually appealing color to the VS Code title bar — perfect for telling workspaces apart at a glance.
 
 ![Colored Title Bar Banner](images/colored-title-bar-banner-askew-short.png)
