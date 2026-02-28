@@ -17,6 +17,8 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     # Only allow publishing from main
     if: github.ref == 'refs/heads/main'
 
