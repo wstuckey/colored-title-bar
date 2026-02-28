@@ -17,7 +17,7 @@
 ### From source
 
 ```bash
-git clone https://github.com/your-username/colored-title-bar.git
+git clone https://github.com/wstuckey/colored-title-bar.git
 cd colored-title-bar
 npm install
 npm run compile
@@ -27,10 +27,30 @@ Then press **F5** in VS Code to launch the Extension Development Host.
 
 ### From VSIX
 
-```bash
-npm run package          # produces colored-title-bar-0.1.0.vsix
-code --install-extension colored-title-bar-0.1.0.vsix
-```
+1. **Build the package:**
+
+   ```bash
+   npm install
+   npx @vscode/vsce package
+   ```
+
+   This produces `colored-title-bar-<version>.vsix` in the project root.
+
+2. **Install into VS Code:**
+
+   ```bash
+   code --install-extension colored-title-bar-0.1.0.vsix
+   ```
+
+   If you use a **custom VS Code profile**, specify it with `--profile`:
+
+   ```bash
+   code --profile <profile-name> --install-extension colored-title-bar-0.1.0.vsix
+   ```
+
+   Alternatively, install from within VS Code: `Cmd+Shift+P` → **"Extensions: Install from VSIX…"** and select the `.vsix` file. This always installs into the currently active profile.
+
+3. **Reload the window** (`Cmd+Shift+P` → "Developer: Reload Window") to activate the extension.
 
 ## Usage
 
