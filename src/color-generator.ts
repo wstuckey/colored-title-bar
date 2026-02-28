@@ -202,22 +202,22 @@ export function hslFromHue(hue: number, theme: ThemeKind): HSL {
 // Derived colors
 // ---------------------------------------------------------------------------
 
-/** Derive a muted inactive-background HSL from the active color. */
+/** Derive a subtly muted inactive-background HSL from the active color. */
 export function deriveInactiveHsl(hsl: HSL, theme: ThemeKind): HSL {
   return {
     h: hsl.h,
-    s: clamp(hsl.s * 0.65, 0, 100),
+    s: clamp(hsl.s * 0.85, 0, 100),
     l: clamp(
-      theme === ThemeKind.Light ? hsl.l + 5 : hsl.l - 3,
+      theme === ThemeKind.Light ? hsl.l + 2 : hsl.l - 1,
       0,
       100,
     ),
   };
 }
 
-/** Derive an inactive foreground by appending 80 % alpha to the active foreground hex. */
+/** Derive the inactive foreground from the active foreground hex. */
 export function deriveInactiveForeground(activeForeground: string): string {
-  return activeForeground + "cc"; // 0xcc ≈ 80 % opacity
+  return activeForeground;
 }
 
 /** Derive a subtle border HSL from the active color. */
