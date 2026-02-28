@@ -12,6 +12,7 @@
   "engines": {
     "vscode": "^1.85.0"
   },
+  "icon": "images/colored-title-bar-logo-small.png",
   "categories": [
     "Themes",
     "Other"

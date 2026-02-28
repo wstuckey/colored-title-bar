@@ -2,6 +2,8 @@
 
 > Apply a random, visually appealing colour to the VS Code title bar — perfect for telling workspaces apart at a glance.
 
+![Colored Title Bar Banner](images/colored-title-bar-banner-askew.png)
+
 ---
 
 ## Features
