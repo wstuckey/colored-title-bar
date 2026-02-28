@@ -4,7 +4,10 @@ src/**
 .gitignore
 .eslintrc.json
 tsconfig.json
+node_modules/**
 **/*.map
 **/*.ts
-!out/**/*.js
+**/*.d.ts
 out/test/**
+images/colored-title-bar-banner-horizontal.png
+images/colored-title-bar-logo.png
