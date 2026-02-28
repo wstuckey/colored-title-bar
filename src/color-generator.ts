@@ -206,7 +206,7 @@ export function hslFromHue(hue: number, theme: ThemeKind): HSL {
 export function deriveInactiveHsl(hsl: HSL, theme: ThemeKind): HSL {
   return {
     h: hsl.h,
-    s: clamp(hsl.s * 0.35, 0, 100),
+    s: clamp(hsl.s * 0.65, 0, 100),
     l: clamp(
       theme === ThemeKind.Light ? hsl.l + 5 : hsl.l - 3,
       0,
@@ -215,9 +215,9 @@ export function deriveInactiveHsl(hsl: HSL, theme: ThemeKind): HSL {
   };
 }
 
-/** Derive an inactive foreground by appending 60 % alpha to the active foreground hex. */
+/** Derive an inactive foreground by appending 80 % alpha to the active foreground hex. */
 export function deriveInactiveForeground(activeForeground: string): string {
-  return activeForeground + "99"; // 0x99 ≈ 60 % opacity
+  return activeForeground + "cc"; // 0xcc ≈ 80 % opacity
 }
 
 /** Derive a subtle border HSL from the active color. */

@@ -284,12 +284,12 @@ describe("deriveInactiveHsl", () => {
 // ---------------------------------------------------------------------------
 
 describe("deriveInactiveForeground", () => {
-  it("appends 99 alpha to white", () => {
-    assert.strictEqual(deriveInactiveForeground("#ffffff"), "#ffffff99");
+  it("appends cc alpha to white", () => {
+    assert.strictEqual(deriveInactiveForeground("#ffffff"), "#ffffffcc");
   });
 
-  it("appends 99 alpha to black", () => {
-    assert.strictEqual(deriveInactiveForeground("#000000"), "#00000099");
+  it("appends cc alpha to black", () => {
+    assert.strictEqual(deriveInactiveForeground("#000000"), "#000000cc");
   });
 });
 

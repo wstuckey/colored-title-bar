@@ -1,6 +1,6 @@
 # Colored Title Bar
 
-> Apply a random, visually appealing colour to the VS Code title bar — perfect for telling workspaces apart at a glance.
+> Apply a random, visually appealing color to the VS Code title bar — perfect for telling workspaces apart at a glance.
 
 ![Colored Title Bar Banner](images/colored-title-bar-banner-askew.png)
 
@@ -8,8 +8,8 @@
 
 ## Features
 
-- **Random colour** — one command generates a pleasing background colour that automatically adapts to your current theme (Dark, Light, or High Contrast).
-- **Pick a colour family** — choose from 14 named hue presets (Red, Orange, Teal, Blue, Purple, …).
+- **Random color** — one command generates a pleasing background color that automatically adapts to your current theme (Dark, Light, or High Contrast).
+- **Pick a color family** — choose from 14 named hue presets (Red, Orange, Teal, Blue, Purple, …).
 - **WCAG-aware foreground** — the extension picks white or black text based on contrast ratio, so icons and labels always stay readable.
 - **Inactive window styling** — the title bar gracefully fades when the window loses focus.
 - **Non-destructive** — only the five `titleBar.*` keys in `workbench.colorCustomizations` are touched; all other customisations are preserved.
@@ -60,7 +60,7 @@ Open the Command Palette (`Cmd+Shift+P` / `Ctrl+Shift+P`) and run:
 
 | Command | Description |
 |---------|-------------|
-| **Colored Title Bar: Randomize Color** | Apply a new random colour. |
+| **Colored Title Bar: Randomize Color** | Apply a new random color. |
 | **Colored Title Bar: Pick Color Family** | Choose a hue family from a list. |
 | **Colored Title Bar: Reset to Default** | Remove all title-bar overrides. |
 
@@ -68,13 +68,13 @@ Open the Command Palette (`Cmd+Shift+P` / `Ctrl+Shift+P`) and run:
 
 | Setting | Type | Default | Description |
 |---------|------|---------|-------------|
-| `coloredTitleBar.colorOnStartup` | `boolean` | `false` | Automatically apply a new random colour every time VS Code starts. |
+| `coloredTitleBar.colorOnStartup` | `boolean` | `false` | Automatically apply a new random color every time VS Code starts. |
 
 ## How It Works
 
 1. A random hue is chosen uniformly from 0 – 360°.
 2. Saturation and lightness are constrained to ranges that look pleasant for the detected theme kind.
-3. The foreground colour (white or black) is selected using the WCAG 2.0 relative-luminance contrast ratio — whichever exceeds 4.5 : 1.
+3. The foreground color (white or black) is selected using the WCAG 2.0 relative-luminance contrast ratio — whichever exceeds 4.5 : 1.
 4. An inactive-background variant is derived by reducing saturation; the inactive foreground gets 60 % opacity.
 5. A subtle border is generated slightly darker than the background.
 6. All five values are merged into your workspace's `workbench.colorCustomizations`.
